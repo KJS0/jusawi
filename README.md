@@ -43,8 +43,4 @@ python app.py
 - Tkinter (GUI)
 - PIL (이미지 처리)
 - Pandas (데이터 처리)
-- GPT API (장소 추정)
-
-## 라이선스
-
-MIT License 
+- GPT API (장소 추정) 
