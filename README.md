@@ -60,7 +60,5 @@ python main.py
 ```
 
 ## 📞 문의
-
 **개발자**: 김진수  
 **이메일**: kjs.fficial@gmail.com 
-**GitHub**: https://github.com/exif-analyzer/capstone

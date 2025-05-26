@@ -40,7 +40,7 @@ def check_dependencies():
     
     if missing_modules:
         error_msg = f"다음 모듈이 설치되지 않았습니다: {', '.join(missing_modules)}\n"
-        error_msg += "pip install -r requirements.txt 명령으로 설치해주세요."
+        error_msg += "pip install 명령으로 필요한 라이브러리를 설치해주세요."
         messagebox.showerror("의존성 오류", error_msg)
         return False
     
