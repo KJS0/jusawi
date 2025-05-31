@@ -51,7 +51,7 @@ class AIImageAnalyzer:
             
             # API 호출
             response = self.client.chat.completions.create(
-                model="gpt-4.1",
+                model="gpt-4o-mini",
                 messages=[
                     {
                         "role": "user",
@@ -69,7 +69,7 @@ class AIImageAnalyzer:
                         ]
                     }
                 ],
-                max_tokens=500
+                max_tokens=800
             )
             
             # 응답 파싱
@@ -81,7 +81,7 @@ class AIImageAnalyzer:
             return {
                 "hashtags": [],
                 "camera_settings": {},
-                "location": "",
+                "location": {},
                 "error": str(e)
             }
     
@@ -94,14 +94,16 @@ class AIImageAnalyzer:
         
         if not has_exif:
             prompt += """2. camera_settings: 추정되는 카메라 설정
-   - shutter_speed: 셔터 속도 (예: "1/125초초")
+   - shutter_speed: 셔터 속도 (예: "1/125")
    - iso: ISO 값 (예: 400)
    - aperture: 조리개 값 (예: "f/2.8")
-   - focal_length: 초점 거리 (예: "50mm")
+   - reasoning: 설정을 추정한 근거
 """
         
         if not has_location:
-            prompt += """3. location: 추정되는 촬영 위치 (도시명, 랜드마크 등)
+            prompt += """3. location: 추정되는 촬영 위치
+   - primary_location: "(소재지) (장소)" 형태로 간단명료하게 (예: "서울 남산타워", "파리 에펠탑")
+   - alternative_locations: 다른 가능한 위치들 (배열, 동일한 형태로)
 """
         
         prompt += """
@@ -111,10 +113,16 @@ class AIImageAnalyzer:
     "camera_settings": {
         "shutter_speed": "추정값",
         "iso": 추정값,
-        "aperture": "추정값"
+        "aperture": "추정값",
+        "reasoning": "설정 추정 근거"
     },
-    "location": "추정 위치"
+    "location": {
+        "primary_location": "(소재지) (장소)",
+        "alternative_locations": ["(소재지) (장소)", "(소재지) (장소)"]
+    }
 }
+
+위치는 반드시 "(도시/지역명) (구체적인 장소명)" 형태로 간단명료하게 제공해주세요.
 """
         return prompt
     
@@ -131,12 +139,12 @@ class AIImageAnalyzer:
                 return {
                     "hashtags": [],
                     "camera_settings": {},
-                    "location": ""
+                    "location": {}
                 }
         except json.JSONDecodeError as e:
             logger.error(f"JSON 파싱 오류: {e}")
             return {
                 "hashtags": [],
                 "camera_settings": {},
-                "location": ""
+                "location": {}
             } 

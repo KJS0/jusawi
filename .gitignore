@@ -26,3 +26,9 @@ Thumbs.db
 *.tmp
 *.bak
 temp/
+
+# 캐시 폴더
+cache/
+
+# 테스트 폴더
+test/
